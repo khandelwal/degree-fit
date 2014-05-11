@@ -21,7 +21,7 @@ class PoissonTest(unittest.TestCase):
         self.assertEqual(len(result), 3)
         for r in result:
             self.assertAlmostEqual(0.1754, r, places=3)
-            
+
 class GeometricTest(unittest.TestCase):
     def test_geometric_lambda_estimation(self):
         degree_list = np.array([5, 5, 5, 5], dtype=np.float)
@@ -36,3 +36,12 @@ class GeometricTest(unittest.TestCase):
         self.assertEqual(len(degree_list), len(result))
         for r in result:
             self.assertAlmostEqual(0.0913, r, places=3)
+
+class AICTest(unittest.TestCase):
+    def test_akaike_criterion(self):
+        degree_list = np.array([5, 5, 5])
+        lambda_estimate = degreefit.poisson_lambda_estimation(degree_list)
+        likelihoods= degreefit.poisson_likelihood_term(
+            lambda_estimate, degree_list)
+        result = degreefit.akaike_criterion(likelihoods)
+        self.assertAlmostEqual(16.44, result, places=2)
