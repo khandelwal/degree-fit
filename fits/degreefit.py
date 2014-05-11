@@ -12,3 +12,12 @@ def poisson_lambda_estimation(num_list):
     given a list of numbers. """
     x = np.array(num_list)
     return x.mean()
+
+
+def geometric_lambda_estimation(num_list):
+    """ Estimate the parameter lambda for the Geometric (Exponential)
+    distribution"""
+
+    x = np.array([float(i) for i in num_list])
+    inverse_theta = np.log([x.sum() / (x.sum() - len(x))])[0]
+    return 1.0/inverse_theta
